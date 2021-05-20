@@ -11,8 +11,6 @@ public class Names {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String name;
-	private String name_lat;
 	private String name_trade;
 	private String name_alt;
 
@@ -22,22 +20,6 @@ public class Names {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName_lat() {
-		return name_lat;
-	}
-
-	public void setName_lat(String name_lat) {
-		this.name_lat = name_lat;
 	}
 
 	public String getName_trade() {

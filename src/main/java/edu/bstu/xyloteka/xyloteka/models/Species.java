@@ -11,6 +11,9 @@ public class Species {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String nameRus;
+    private String nameLat;
+
     public Long getId() {
         return this.id;
     }
@@ -19,13 +22,20 @@ public class Species {
         this.id = id;
     }
 
-    private String name;
-
-    public String getName() {
-        return name;
+    public String getNameRus() {
+        return this.nameRus;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRus(String nameRus) {
+        this.nameRus = nameRus;
     }
+
+    public String getNameLat() {
+        return this.nameLat;
+    }
+
+    public void setNameLat(String nameLat) {
+        this.nameLat = nameLat;
+    }
+
 }
