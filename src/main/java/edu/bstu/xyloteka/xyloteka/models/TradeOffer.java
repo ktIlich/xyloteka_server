@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class TradeOffers {
+public class TradeOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,8 +18,11 @@ public class TradeOffers {
     @JoinColumn(name = "who_request_id")
     private User who_request;
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "who_offer_id")
-    private User what_offer;
+    @JoinColumn(name = "what_offer_id")
+    private Sample what_offer;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "what_ask_id")
+    private Sample what_ask;
     // @ManyToOne(fetch = FetchType.EAGER)
     // @JoinColumn(name = "who_as_id")
     // private User what_ask;
@@ -44,12 +47,20 @@ public class TradeOffers {
         this.who_request = who_request;
     }
 
-    public User getWhat_offer() {
+    public Sample getWhat_offer() {
         return this.what_offer;
     }
 
-    public void setWhat_offer(User what_offer) {
+    public void setWhat_offer(Sample what_offer) {
         this.what_offer = what_offer;
+    }
+
+    public Sample getWhat_ask() {
+        return this.what_ask;
+    }
+
+    public void setWhat_ask(Sample what_ask) {
+        this.what_ask = what_ask;
     }
 
     public String getDescription() {

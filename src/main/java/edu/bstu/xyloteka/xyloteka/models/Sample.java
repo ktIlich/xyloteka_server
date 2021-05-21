@@ -1,5 +1,8 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Sample {
@@ -14,29 +19,26 @@ public class Sample {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "botanic_description_id")
     private BotanicDescription botanic_descriprtion;
 
     private String place;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "who_collect_id")
     private User who_collect;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne()
     @JoinColumn(name = "who_define_id")
     private User who_define;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "trade_offer_id")
-    private TradeOffers isTrade;
+    private Long isTrade;
 
     private java.util.Date collect_date;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "photo_id")
-    private Photo photo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
+    private Set<Photo> photos;
 
     private String description;
 
@@ -91,11 +93,11 @@ public class Sample {
         this.who_define = who_define;
     }
 
-    public TradeOffers getIsTrade() {
+    public Long getIsTrade() {
         return this.isTrade;
     }
 
-    public void setIsTrade(TradeOffers isTrade) {
+    public void setIsTrade(Long isTrade) {
         this.isTrade = isTrade;
     }
 
@@ -107,12 +109,12 @@ public class Sample {
         this.collect_date = collect_date;
     }
 
-    public Photo getPhoto() {
-        return this.photo;
+    public Set<Photo> getPhotos() {
+        return this.photos;
     }
 
-    public void setPhoto(Photo photo) {
-        this.photo = photo;
+    public void setPhotos(Set<Photo> photos) {
+        this.photos = photos;
     }
 
     public String getDescription() {

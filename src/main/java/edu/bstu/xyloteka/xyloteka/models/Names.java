@@ -12,7 +12,6 @@ public class Names {
 	private Long id;
 
 	private String name_trade;
-	private String name_alt;
 
 	public Long getId() {
 		return id;
@@ -28,13 +27,5 @@ public class Names {
 
 	public void setName_trade(String name_trade) {
 		this.name_trade = name_trade;
-	}
-
-	public String getName_alt() {
-		return name_alt;
-	}
-
-	public void setName_alt(String name_alt) {
-		this.name_alt = name_alt;
 	}
 }

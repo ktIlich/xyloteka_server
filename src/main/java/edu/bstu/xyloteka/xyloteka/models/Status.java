@@ -10,15 +10,6 @@ public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     private String name;
 
     public String getName() {
@@ -28,4 +19,13 @@ public class Status {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
 }

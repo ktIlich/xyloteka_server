@@ -5,16 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bstu.xyloteka.xyloteka.models.BotanicDescription;
-import edu.bstu.xyloteka.xyloteka.repo.BotanicDescriptionRepository;
+import edu.bstu.xyloteka.xyloteka.models.Sample;
+import edu.bstu.xyloteka.xyloteka.repo.SampleRepository;
 
 @RestController
 public class BotanicDescriptionController {
     @Autowired
-    private BotanicDescriptionRepository botanicDescriptionRepository;
+    private SampleRepository SampleRepository;
 
-    @GetMapping("/botanic")
-    public @ResponseBody Iterable<BotanicDescription> botanicDescription(Long id) {
-        return botanicDescriptionRepository.findAll();
+    @GetMapping("/sample")
+    public @ResponseBody Iterable<Sample> botanicDescription(Long id) {
+        return SampleRepository.findAll();
     }
 }

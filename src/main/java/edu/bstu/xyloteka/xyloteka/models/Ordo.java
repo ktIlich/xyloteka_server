@@ -6,10 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class Order {
+public class Ordo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
     public Long getId() {
         return this.id;
@@ -18,8 +19,6 @@ public class Order {
     public void setId(Long id) {
         this.id = id;
     }
-
-    private String name;
 
     public String getName() {
         return name;

@@ -1,68 +1,91 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class BotanicDescription {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "divisio_id")
+	private Division divisio;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "classis_id")
+	private Classis classis;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ordo_id")
+	private Ordo ordo;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "familiy_id")
+	private Family familiy;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "genus_id")
+	private Genus genus;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "species_id")
+	private Species species;
 
-	private int divisio;
-	private int classis;
-	private int ordo;
-	private int familia;
-	private int genus;
-	private int species;
-
-	public int getDivisio() {
-		return divisio;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setDivisio(int divisio) {
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Division getDivisio() {
+		return this.divisio;
+	}
+
+	public void setDivisio(Division divisio) {
 		this.divisio = divisio;
 	}
 
-	public int getClassis() {
-		return classis;
+	public Classis getClassis() {
+		return this.classis;
 	}
 
-	public void setClassis(int classis) {
+	public void setClassis(Classis classis) {
 		this.classis = classis;
 	}
 
-	public int getOrdo() {
-		return ordo;
+	public Ordo getOrdo() {
+		return this.ordo;
 	}
 
-	public void setOrdo(int ordo) {
+	public void setOrdo(Ordo ordo) {
 		this.ordo = ordo;
 	}
 
-	public int getFamilia() {
-		return familia;
+	public Family getFamiliy() {
+		return this.familiy;
 	}
 
-	public void setFamilia(int familia) {
-		this.familia = familia;
+	public void setFamiliy(Family familiy) {
+		this.familiy = familiy;
 	}
 
-	public int getGenus() {
-		return genus;
+	public Genus getGenus() {
+		return this.genus;
 	}
 
-	public void setGenus(int genus) {
+	public void setGenus(Genus genus) {
 		this.genus = genus;
 	}
 
-	public int getSpecies() {
-		return species;
+	public Species getSpecies() {
+		return this.species;
 	}
 
-	public void setSpecies(int species) {
+	public void setSpecies(Species species) {
 		this.species = species;
 	}
+
 }
