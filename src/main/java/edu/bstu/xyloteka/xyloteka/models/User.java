@@ -1,14 +1,33 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
+
+@Getter
+@Setter
+@EqualsAndHashCode
+@NoArgsConstructor
 @Entity
-public class User {
+public class User implements UserDetails {
+	@SequenceGenerator(
+			name = "student_sequence",
+			sequenceName = "student_sequence",
+			allocationSize = 1
+	)
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(
+			strategy = GenerationType.SEQUENCE,
+			generator = "student_sequence"
+	)
 	private Long id;
 	private String first_name;
 	private String second_name;
@@ -19,85 +38,52 @@ public class User {
 	private String email;
 	private String phone;
 	private String about;
-	private int type;
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
+	private Boolean locked = false;
+	private Boolean enabled = false;
 
-	public String getFirst_name() {
-		return first_name;
-	}
-
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
-
-	public String getSecond_name() {
-		return second_name;
-	}
-
-	public void setSecond_name(String second_name) {
-		this.second_name = second_name;
-	}
-
-	public String getLast_name() {
-		return last_name;
-	}
-
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
-	}
-
-	public String getOrganization() {
-		return organization;
-	}
-
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
+	public User(String username, String password, String email, String phone, UserRole userRole) {
 		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.phone = phone;
+		this.userRole = userRole;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
+	@Override
+	public String getUsername() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
+		return Collections.singletonList(authority);
 	}
 
-	public String getPhone() {
-		return phone;
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	@Override
+	public boolean isAccountNonLocked() {
+		return !locked;
 	}
 
-	public String getAbout() {
-		return about;
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 
-	public void setAbout(String about) {
-		this.about = about;
-	}
-
-	public int getType() {
-		return type;
-	}
-
-	public void setType(int type) {
-		this.type = type;
+	@Override
+	public boolean isEnabled() {
+		return enabled;
 	}
 }
