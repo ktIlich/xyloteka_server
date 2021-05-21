@@ -21,7 +21,7 @@ public class Sample {
 
     @OneToOne()
     @JoinColumn(name = "botanic_description_id")
-    private BotanicDescription botanic_descriprtion;
+    private BotanicDescription botanic_description;
 
     private String place;
 
@@ -61,12 +61,12 @@ public class Sample {
         this.id = id;
     }
 
-    public BotanicDescription getBotanic_descriprtion() {
-        return this.botanic_descriprtion;
+    public BotanicDescription getBotanic_description() {
+        return this.botanic_description;
     }
 
-    public void setBotanic_descriprtion(BotanicDescription botanic_descriprtion) {
-        this.botanic_descriprtion = botanic_descriprtion;
+    public void setBotanic_description(BotanicDescription botanic_description) {
+        this.botanic_description = botanic_description;
     }
 
     public String getPlace() {

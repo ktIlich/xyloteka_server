@@ -23,9 +23,6 @@ public class TradeOffer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "what_ask_id")
     private Sample what_ask;
-    // @ManyToOne(fetch = FetchType.EAGER)
-    // @JoinColumn(name = "who_as_id")
-    // private User what_ask;
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "status_id")
