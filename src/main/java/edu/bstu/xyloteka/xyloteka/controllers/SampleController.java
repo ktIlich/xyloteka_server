@@ -177,7 +177,7 @@ public class SampleController {
             _sample.setPhotos(sample.getPhotos());
             _sample.setDescription(sample.getDescription());
             _sample.setProperty(sample.getProperty());
-            _sample.setNames((sample.getNames());
+            _sample.setNames(sample.getNames());
             return new ResponseEntity<>(repo.save(_sample), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
