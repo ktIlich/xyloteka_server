@@ -1,11 +1,9 @@
 package edu.bstu.xyloteka.xyloteka.repo;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
 import edu.bstu.xyloteka.xyloteka.models.Photo;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "Photo", path = "Photo")
-public interface PhotoRepository extends CrudRepository<Photo, Long> {
-
+@Repository
+public interface PhotoRepository extends JpaRepository<Photo, Long> {
 }
