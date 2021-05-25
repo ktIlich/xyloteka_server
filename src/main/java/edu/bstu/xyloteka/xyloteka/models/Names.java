@@ -1,31 +1,30 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Names {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	private String name_trade;
+    private String tradeName;
+    private String altName;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName_trade() {
-		return name_trade;
-	}
-
-	public void setName_trade(String name_trade) {
-		this.name_trade = name_trade;
-	}
+    public Names(String trade, String alt) {
+        this.tradeName = trade;
+        this.altName = alt;
+    }
 }

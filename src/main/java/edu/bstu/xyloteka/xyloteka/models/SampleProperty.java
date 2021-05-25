@@ -1,10 +1,17 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class SampleProperty {
     @Id
@@ -14,27 +21,9 @@ public class SampleProperty {
     private String hardness;
     private String shrinkage;
 
-    public String getDensity() {
-        return density;
-    }
-
-    public void setDensity(String density) {
+    public SampleProperty(String density, String hardness, String shrinkage) {
         this.density = density;
-    }
-
-    public String getHardness() {
-        return hardness;
-    }
-
-    public void setHardness(String hardness) {
         this.hardness = hardness;
-    }
-
-    public String getShrinkage() {
-        return shrinkage;
-    }
-
-    public void setShrinkage(String shrinkage) {
         this.shrinkage = shrinkage;
     }
 }

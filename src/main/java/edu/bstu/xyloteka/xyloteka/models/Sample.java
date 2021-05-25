@@ -1,18 +1,24 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Sample {
     @Id
@@ -21,124 +27,45 @@ public class Sample {
 
     @OneToOne()
     @JoinColumn(name = "botanic_description_id")
-    private BotanicDescription botanic_description;
+    private BotanicDescription botanicDescription;
 
     private String place;
 
     @OneToOne()
     @JoinColumn(name = "who_collect_id")
-    private User who_collect;
+    private User whoCollect;
 
     @OneToOne()
     @JoinColumn(name = "who_define_id")
-    private User who_define;
+    private User whoDefine;
 
-    private Long isTrade;
+    private boolean trade;
 
-    private java.util.Date collect_date;
+    private java.util.Date collectDate;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
     private Set<Photo> photos;
 
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "property_id")
     private SampleProperty property;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "names_id")
     private Names names;
 
-    public Sample() {
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public BotanicDescription getBotanic_description() {
-        return this.botanic_description;
-    }
-
-    public void setBotanic_description(BotanicDescription botanic_description) {
-        this.botanic_description = botanic_description;
-    }
-
-    public String getPlace() {
-        return this.place;
-    }
-
-    public void setPlace(String place) {
+    public Sample(BotanicDescription botanicDescription, String place, User whoCollect, User whoDefine, boolean trade, Date collectDate, Set<Photo> photos, String description, SampleProperty property, Names names) {
+        this.botanicDescription = botanicDescription;
         this.place = place;
-    }
-
-    public User getWho_collect() {
-        return this.who_collect;
-    }
-
-    public void setWho_collect(User who_collect) {
-        this.who_collect = who_collect;
-    }
-
-    public User getWho_define() {
-        return this.who_define;
-    }
-
-    public void setWho_define(User who_define) {
-        this.who_define = who_define;
-    }
-
-    public Long getIsTrade() {
-        return this.isTrade;
-    }
-
-    public void setIsTrade(Long isTrade) {
-        this.isTrade = isTrade;
-    }
-
-    public java.util.Date getCollect_date() {
-        return this.collect_date;
-    }
-
-    public void setCollect_date(java.util.Date collect_date) {
-        this.collect_date = collect_date;
-    }
-
-    public Set<Photo> getPhotos() {
-        return this.photos;
-    }
-
-    public void setPhotos(Set<Photo> photos) {
+        this.whoCollect = whoCollect;
+        this.whoDefine = whoDefine;
+        this.trade = trade;
+        this.collectDate = collectDate;
         this.photos = photos;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
         this.description = description;
-    }
-
-    public SampleProperty getProperty() {
-        return this.property;
-    }
-
-    public void setProperty(SampleProperty property) {
         this.property = property;
-    }
-
-    public Names getNames() {
-        return this.names;
-    }
-
-    public void setNames(Names names) {
         this.names = names;
     }
-
 }

@@ -1,11 +1,17 @@
 package edu.bstu.xyloteka.xyloteka.repo;
 
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
 import edu.bstu.xyloteka.xyloteka.models.Species;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "Species", path = "Species")
-public interface SpeciesRepository extends CrudRepository<Species, Long> {
+import java.util.List;
+import java.util.Optional;
 
+@Repository
+public interface SpeciesRepository extends JpaRepository<Species, Long> {
+    Optional<Species> findById(long id);
+    Optional<Species> findByNameRusOrNameLat(String nameRus, String nameLat);
+    Optional<Species> findByNameRusAndNameLat(String nameRus, String nameLat);
+
+    List<Species> findByNameRusContainingOrNameLatContaining(String rus, String lat);
 }

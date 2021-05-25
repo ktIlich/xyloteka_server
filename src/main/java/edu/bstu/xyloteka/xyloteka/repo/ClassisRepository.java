@@ -1,11 +1,14 @@
 package edu.bstu.xyloteka.xyloteka.repo;
-
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-
+import java.util.List;
 import edu.bstu.xyloteka.xyloteka.models.Classis;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-@RepositoryRestResource(collectionResourceRel = "Classis", path = "Classis")
-public interface ClassisRepository extends CrudRepository<Classis, Long> {
+import java.util.Optional;
 
+@Repository
+public interface ClassisRepository extends JpaRepository<Classis, Long> {
+    Optional<Classis> findById(long id);
+    Optional<Classis> findByName(String name);
+    List<Classis> findByNameContaining(String name);
 }
