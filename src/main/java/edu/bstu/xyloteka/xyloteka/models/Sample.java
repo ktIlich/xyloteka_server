@@ -23,7 +23,7 @@ import javax.persistence.OneToOne;
 public class Sample {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
 
     @OneToOne()
     @JoinColumn(name = "botanic_description_id")
