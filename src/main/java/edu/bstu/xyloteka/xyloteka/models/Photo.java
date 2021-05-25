@@ -1,5 +1,9 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 public class Photo {
     @Id
@@ -15,30 +22,11 @@ public class Photo {
 
     @ManyToOne
     @JoinColumn(name = "sample_id")
-    private Sample sample_id;
+    private Sample sample;
     private String photo;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Sample getSample_id() {
-        return this.sample_id;
-    }
-
-    public void setSample_id(Sample sample_id) {
-        this.sample_id = sample_id;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
+    public Photo(Sample sample, String photo) {
+        this.sample = sample;
         this.photo = photo;
     }
 }
