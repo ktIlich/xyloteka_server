@@ -76,7 +76,7 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/user/{id}/role")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody Set<String> strRoles) {
         Optional<User> userData = repo.findById(id);
