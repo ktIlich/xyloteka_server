@@ -22,7 +22,8 @@ public class SampleController {
     @GetMapping("/samples")
     public ResponseEntity<List<Sample>> getAllSample(@RequestParam(required = false) String trade,
                                                      @RequestParam(required = false) String date,
-                                                     @RequestParam(required = false) String place
+                                                     @RequestParam(required = false) String place,
+                                                     @RequestParam(required = false) String approve
     ) {
         try {
 
@@ -32,6 +33,8 @@ public class SampleController {
                 samples.addAll(repo.findAll());
             } else if (trade != null) {
                 samples.addAll(repo.findByTrade(Boolean.getBoolean(trade)));
+            } else if (approve != null) {
+                samples.addAll(repo.findByApprove(Boolean.getBoolean(approve)));
             } else if (date != null) {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
                 Date _date = formatter.parse(date);
