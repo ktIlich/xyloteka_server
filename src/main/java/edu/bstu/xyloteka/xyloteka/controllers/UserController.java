@@ -46,15 +46,16 @@ public class UserController {
         return userData.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/user/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
-        Optional<User> userData = repo.findByUsername(username);
-        return userData.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
+    @GetMapping("/user")
+    public ResponseEntity<User> getUserByUsername(@RequestParam(required = false) String username,
+                                                  @RequestParam(required = false) String email) {
+        Optional<User> userData = Optional.empty();
+        if (username != null) {
+             userData = repo.findByUsername(username);
+        } else if (email != null) {
+            userData = repo.findByEmail(email);
+        }
 
-    @GetMapping("/user/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable("email") String email) {
-        Optional<User> userData = repo.findByEmail(email);
         return userData.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 

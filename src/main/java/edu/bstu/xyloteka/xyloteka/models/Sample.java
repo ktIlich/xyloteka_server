@@ -56,7 +56,9 @@ public class Sample {
     @JoinColumn(name = "names_id")
     private Names names;
 
-    public Sample(BotanicDescription botanicDescription, String place, User whoCollect, User whoDefine, boolean trade, Date collectDate, Set<Photo> photos, String description, SampleProperty property, Names names) {
+    private boolean approve;
+
+    public Sample(BotanicDescription botanicDescription, String place, User whoCollect, User whoDefine, boolean trade, Date collectDate, Set<Photo> photos, String description, SampleProperty property, Names names, boolean approve) {
         this.botanicDescription = botanicDescription;
         this.place = place;
         this.whoCollect = whoCollect;
@@ -67,5 +69,6 @@ public class Sample {
         this.description = description;
         this.property = property;
         this.names = names;
+        this.approve = approve;
     }
 }

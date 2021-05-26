@@ -29,4 +29,5 @@ public interface SampleRepository extends JpaRepository<Sample, Long> {
     List<Sample> findByPropertyDensityContaining(String density);
     List<Sample> findByPropertyHardnessContaining(String hardness);
     List<Sample> findByPropertyShrinkageContaining(String shrinkage);
+    List<Sample> findByApprove(boolean approve);
 }
