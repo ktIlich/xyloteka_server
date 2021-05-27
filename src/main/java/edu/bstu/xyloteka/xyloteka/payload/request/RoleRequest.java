@@ -8,5 +8,9 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 public class RoleRequest {
-    private String role;
+    private boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
 }

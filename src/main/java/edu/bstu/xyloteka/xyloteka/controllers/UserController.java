@@ -80,8 +80,8 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/{id}/role/")
-    public ResponseEntity<User> updateUserRole(@PathVariable("id") long id, @RequestBody boolean admin) {
+    @PutMapping("/user/{id}/role")
+    public ResponseEntity<User> updateUserRole(@PathVariable("id") long id, @RequestBody RoleRequest admin) {
         Optional<User> userData = repo.findById(id);
         if (userData.isPresent()) {
             User _user = userData.get();
@@ -90,7 +90,7 @@ public class UserController {
             Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
-            if (admin) {
+            if (admin.isAdmin()) {
                 Role adminRole = roleRepository.findByName(UserRole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                 roles.add(adminRole);
