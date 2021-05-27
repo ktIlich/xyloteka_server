@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -43,9 +43,6 @@ public class Sample {
 
     private java.util.Date collectDate;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "photo")
-    private Set<Photo> photos;
-
     private String description;
 
     @OneToOne
@@ -58,14 +55,13 @@ public class Sample {
 
     private boolean approve;
 
-    public Sample(BotanicDescription botanicDescription, String place, User whoCollect, User whoDefine, boolean trade, Date collectDate, Set<Photo> photos, String description, SampleProperty property, Names names, boolean approve) {
+    public Sample(BotanicDescription botanicDescription, String place, User whoCollect, User whoDefine, boolean trade, Date collectDate, String description, SampleProperty property, Names names, boolean approve) {
         this.botanicDescription = botanicDescription;
         this.place = place;
         this.whoCollect = whoCollect;
         this.whoDefine = whoDefine;
         this.trade = trade;
         this.collectDate = collectDate;
-        this.photos = photos;
         this.description = description;
         this.property = property;
         this.names = names;

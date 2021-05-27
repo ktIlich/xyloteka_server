@@ -1,8 +1,10 @@
 package edu.bstu.xyloteka.xyloteka.controllers;
 
+import edu.bstu.xyloteka.xyloteka.models.Classis;
 import edu.bstu.xyloteka.xyloteka.models.Role;
 import edu.bstu.xyloteka.xyloteka.models.User;
 import edu.bstu.xyloteka.xyloteka.models.UserRole;
+import edu.bstu.xyloteka.xyloteka.payload.request.RoleRequest;
 import edu.bstu.xyloteka.xyloteka.repo.RoleRepository;
 import edu.bstu.xyloteka.xyloteka.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -77,30 +80,20 @@ public class UserController {
         }
     }
 
-    @PutMapping("/user/{id}/role")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<User> updateUser(@PathVariable("id") long id, @RequestBody Set<String> strRoles) {
+    @PutMapping("/user/{id}/role/")
+    public ResponseEntity<User> updateUserRole(@PathVariable("id") long id, @RequestBody boolean admin) {
         Optional<User> userData = repo.findById(id);
         if (userData.isPresent()) {
             User _user = userData.get();
             Set<Role> roles = new HashSet<>();
 
-            if (strRoles == null) {
-                Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
+            Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
+                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+            roles.add(userRole);
+            if (admin) {
+                Role adminRole = roleRepository.findByName(UserRole.ROLE_ADMIN)
                         .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                roles.add(userRole);
-            } else {
-                strRoles.forEach(role -> {
-                    if ("admin".equals(role)) {
-                        Role adminRole = roleRepository.findByName(UserRole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-                    } else {
-                        Role userRole = roleRepository.findByName(UserRole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                    }
-                });
+                roles.add(adminRole);
             }
             _user.setRoles(roles);
             return new ResponseEntity<>(repo.save(_user), HttpStatus.OK);

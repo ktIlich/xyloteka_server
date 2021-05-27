@@ -1,5 +1,8 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +23,11 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sample_id")
     private Sample sample;
+
     private String photo;
 
     public Photo(Sample sample, String photo) {

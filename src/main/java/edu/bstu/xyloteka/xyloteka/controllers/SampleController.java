@@ -1,6 +1,9 @@
 package edu.bstu.xyloteka.xyloteka.controllers;
 
 import edu.bstu.xyloteka.xyloteka.models.Sample;
+import edu.bstu.xyloteka.xyloteka.repo.BotanicDescriptionRepository;
+import edu.bstu.xyloteka.xyloteka.repo.NamesRepository;
+import edu.bstu.xyloteka.xyloteka.repo.SamplePropertiesRepository;
 import edu.bstu.xyloteka.xyloteka.repo.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,15 @@ public class SampleController {
 
     @Autowired
     SampleRepository repo;
+
+    @Autowired
+    BotanicDescriptionRepository botanicRepo;
+
+    @Autowired
+    NamesRepository namesRepo;
+
+    @Autowired
+    SamplePropertiesRepository propertiesRepo;
 
     @GetMapping("/samples")
     public ResponseEntity<List<Sample>> getAllSample(@RequestParam(required = false) String trade,
@@ -147,6 +159,9 @@ public class SampleController {
     @PostMapping("/sample")
     public ResponseEntity<Sample> createSample(@RequestBody Sample sample) {
         try {
+            botanicRepo.save(sample.getBotanicDescription());
+            propertiesRepo.save(sample.getProperty());
+            namesRepo.save(sample.getNames());
             return new ResponseEntity<>(repo.save(sample), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -177,7 +192,6 @@ public class SampleController {
             _sample.setWhoDefine(sample.getWhoDefine());
             _sample.setTrade(sample.isTrade());
             _sample.setCollectDate(sample.getCollectDate());
-            _sample.setPhotos(sample.getPhotos());
             _sample.setDescription(sample.getDescription());
             _sample.setProperty(sample.getProperty());
             _sample.setNames(sample.getNames());

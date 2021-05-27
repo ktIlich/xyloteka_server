@@ -1,5 +1,6 @@
 package edu.bstu.xyloteka.xyloteka.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class User {
     @Size(max = 50)
     @Email
     private String email;
+    @JsonIgnore
     @NotBlank
     @Size(max = 120)
     private String password;
