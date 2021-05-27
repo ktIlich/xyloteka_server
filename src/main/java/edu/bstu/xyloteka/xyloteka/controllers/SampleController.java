@@ -105,9 +105,12 @@ public class SampleController {
         return sampleData.map(sample -> new ResponseEntity<>(sample, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/sample/{tradeName}")
-    public ResponseEntity<Map<String, Object>> getSampleByTradeName(
-            @PathVariable("tradeName") String name,
+    @GetMapping("/sample/find")
+    public ResponseEntity<Map<String, Object>> findSampleBy(
+            @RequestParam(required = false) String tradeName,
+            @RequestParam(required = false) String altName,
+            @RequestParam(required = false) String whoCollect,
+            @RequestParam(required = false) String whoDefine,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "40") int size,
             @RequestParam(defaultValue = "id,desc") String[] sort) {
@@ -126,115 +129,16 @@ public class SampleController {
             List<Sample> samples;
             Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
 
-            Page<Sample> pageSamples = repo.findByNamesTradeNameContaining(name, pagingSort);
-
-            samples = pageSamples.getContent();
-            Map<String, Object> response = new HashMap<>();
-            response.put("samples", samples);
-            response.put("currentPage", pageSamples.getNumber());
-            response.put("totalItems", pageSamples.getTotalElements());
-            response.put("totalPages", pageSamples.getTotalPages());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/sample/{altName}")
-    public ResponseEntity<Map<String, Object>> getSampleByAltName(
-            @PathVariable("altName") String name,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "40") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort) {
-        try {
-            List<Order> orders = new ArrayList<>();
-
-            if (sort[0].contains(",")) {
-                for (String sortOrder : sort) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            } else {
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
+            Page<Sample> pageSamples = null;
+            if (tradeName != null) {
+                pageSamples = repo.findByNamesTradeNameContaining(tradeName, pagingSort);
+            } else if (altName != null) {
+                pageSamples = repo.findByNamesAltNameContaining(altName, pagingSort);
+            } else if (whoCollect != null) {
+                pageSamples = repo.findByWhoCollectId(Long.getLong(whoCollect), pagingSort);
+            } else if (whoDefine != null) {
+                pageSamples = repo.findByWhoDefineId(Long.getLong(whoDefine), pagingSort);
             }
-
-            List<Sample> samples;
-            Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
-
-            Page<Sample> pageSamples = repo.findByNamesAltNameContaining(name, pagingSort);
-
-            samples = pageSamples.getContent();
-            Map<String, Object> response = new HashMap<>();
-            response.put("samples", samples);
-            response.put("currentPage", pageSamples.getNumber());
-            response.put("totalItems", pageSamples.getTotalElements());
-            response.put("totalPages", pageSamples.getTotalPages());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/sample/{whoCollect}")
-    public ResponseEntity<Map<String, Object>> getSampleByWhoCollectId(
-            @PathVariable("whoCollect") long id,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "40") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort) {
-        try {
-            List<Order> orders = new ArrayList<>();
-
-            if (sort[0].contains(",")) {
-                for (String sortOrder : sort) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            } else {
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-            }
-
-            List<Sample> samples;
-            Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
-
-            Page<Sample> pageSamples = repo.findByWhoCollectId(id, pagingSort);
-
-            samples = pageSamples.getContent();
-            Map<String, Object> response = new HashMap<>();
-            response.put("samples", samples);
-            response.put("currentPage", pageSamples.getNumber());
-            response.put("totalItems", pageSamples.getTotalElements());
-            response.put("totalPages", pageSamples.getTotalPages());
-
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/sample/{whoDefine}")
-    public ResponseEntity<Map<String, Object>> getSampleByWhoDefineId(
-            @PathVariable("whoDefine") long id,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "40") int size,
-            @RequestParam(defaultValue = "id,desc") String[] sort) {
-        try {
-            List<Order> orders = new ArrayList<>();
-
-            if (sort[0].contains(",")) {
-                for (String sortOrder : sort) {
-                    String[] _sort = sortOrder.split(",");
-                    orders.add(new Order(getSortDirection(_sort[1]), _sort[0]));
-                }
-            } else {
-                orders.add(new Order(getSortDirection(sort[1]), sort[0]));
-            }
-
-            List<Sample> samples;
-            Pageable pagingSort = PageRequest.of(page, size, Sort.by(orders));
-
-            Page<Sample> pageSamples = repo.findByWhoDefineId(id, pagingSort);
 
             samples = pageSamples.getContent();
             Map<String, Object> response = new HashMap<>();
